@@ -1,0 +1,19 @@
+syntax = "proto3";
+package tutorial;
+
+option optimize_for = LITE_RUNTIME;
+message  Student{
+    required uint64 id = 1;
+    required string name =2;
+    string email = 3;
+    enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    }
+    message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2 [default = HOME];
+    }
+    repeated PhoneNumber phone = 4;
+}
+
