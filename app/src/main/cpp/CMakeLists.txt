@@ -60,3 +60,7 @@ if(NOT "${ANDROID_ABI}" STREQUAL "SSS")
 else()
   message(STATUS "HOOK LIB ELSE CONNTENT")
 endif()
+
+add_executable(binsearch binsearch.cpp)
+add_executable(strings strings.cpp)
+add_subdirectory(LIEF)

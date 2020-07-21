@@ -3,7 +3,13 @@
 #include "msg.pb.h"
 #include <fstream>
 
-int main(){
+
+
+
+
+
+void gb()
+{
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     char buf[1024] = {'\0'};
     int buf_len = 0;
@@ -17,5 +23,8 @@ int main(){
     // *) deserialize phrase => byte array to object
     msg2.ParseFromArray(buf, buf_len);
     assert(msg1.id() == msg2.id());
+}
+int main(){
+gb();
     return 0;
 }
