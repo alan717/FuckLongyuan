@@ -31,18 +31,21 @@ include_directories(${PROJECT_SOURCE_DIR}/)
 add_library(${PROJECT_NAME} android-anti-debug.cpp)
 target_link_libraries(${PROJECT_NAME} ${log-lib} )
 
+
+
+message(STATUS "BUILD testpb only for armeabi-v7a")
+add_library(libprotobuf STATIC IMPORTED)
+set_target_properties(libprotobuf PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/libprotobuf/android/${ANDROID_ABI}/lib/libprotobuf-lite.a)
+include_directories(${CMAKE_SOURCE_DIR}/libprotobuf/android/include)
+add_executable(testpb main.cpp  mg.pb.cc)
+#target_link_libraries(testpb ${CMAKE_SOURCE_DIR}/libprotobuf/android/lib/${ANDROID_ABI}/libprotobuf-lite.a)
+target_include_directories(testpb PRIVATE
+        ${CMAKE_SOURCE_DIR}/libprotobuf/android/armeabi-v7a/include)
+target_link_libraries(testpb  PRIVATE libprotobuf log)
 #===================== testpb
 if("${ANDROID_ABI}" STREQUAL "armeabi-v7a")
-  message(STATUS "BUILD testpb only for armeabi-v7a")
-  add_library(libprotobuf STATIC IMPORTED)
-  set_target_properties(libprotobuf PROPERTIES IMPORTED_LOCATION
-          ${CMAKE_SOURCE_DIR}/libprotobuf/android/${ANDROID_ABI}/lib/libprotobuf-lite.a)
-  include_directories(${CMAKE_SOURCE_DIR}/libprotobuf/android/include)
-  add_executable(testpb main.cpp msg.pb.cc)
-  #target_link_libraries(testpb ${CMAKE_SOURCE_DIR}/libprotobuf/android/lib/${ANDROID_ABI}/libprotobuf-lite.a)
-  target_include_directories(testpb PRIVATE
-        ${CMAKE_SOURCE_DIR}/libprotobuf/android/armeabi-v7a/include)
-  target_link_libraries(testpb  PRIVATE libprotobuf log)
+  message(STATUS "BUILD ARMEABI-V7A")
   else()
   message(STATUS "NOT BUILD :${ANDROID_ABI}")
 endif()
@@ -63,4 +66,4 @@ endif()
 
 add_executable(binsearch binsearch.cpp)
 add_executable(strings strings.cpp)
-add_subdirectory(LIEF)
+#add_subdirectory(LIEF)
